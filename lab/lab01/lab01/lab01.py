@@ -1,3 +1,4 @@
+# python ok -q falling --local
 def falling(n, k):
     """Compute the falling factorial of n to depth k.
 
@@ -10,9 +11,12 @@ def falling(n, k):
     >>> falling(4, 0)
     1
     """
-    "*** YOUR CODE HERE ***"
+    ans = 1
+    for i in range(k):
+        ans = ans * (n - i)
+    return ans
 
-
+# python ok -q divisible_by_k --local
 def divisible_by_k(n, k):
     """
     >>> a = divisible_by_k(10, 2)  # 2, 4, 6, 8, and 10 are divisible by 2
@@ -33,9 +37,14 @@ def divisible_by_k(n, k):
     >>> c
     0
     """
-    "*** YOUR CODE HERE ***"
+    ans = 0
+    for i in range(1, n + 1, 1):
+        if (i % k == 0):
+            print(i)
+            ans = ans + 1
+    return ans
 
-
+# python ok -q sum_digits --local
 def sum_digits(y):
     """Sum all the digits of y.
 
@@ -49,7 +58,11 @@ def sum_digits(y):
     >>> a
     6
     """
-    "*** YOUR CODE HERE ***"
+    ans = 0
+    while (y):
+        ans += y % 10
+        y //=10
+    return ans
 
 
 def double_eights(n):
@@ -67,5 +80,11 @@ def double_eights(n):
     >>> double_eights(80808080)
     False
     """
-    "*** YOUR CODE HERE ***"
-
+    ok = False
+    while (n):
+        x = n % 10
+        n //= 10
+        y = n % 10
+        if (x == y and x == 8):
+            ok = True
+    return ok

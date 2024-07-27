@@ -15,7 +15,15 @@ def flatten(s):
     >>> flatten(very_deep)
     ['m', 'i', 'n', 'm', 'e', 'w', 't', 'a', 't', 'i', 'o', 'n', 's']
     """
-    "*** YOUR CODE HERE ***"
+    ans = []
+    for it in s:
+        if type(it) == list:
+            l = flatten(it)
+            ans += l
+        else:
+            ans += [it]
+    return ans
+
 
 
 def merge(s, t):
@@ -41,7 +49,11 @@ def merge(s, t):
     >>> check(LAB_SOURCE_FILE, 'merge', ['While', 'For'])    # ban iteration
     True
     """
-    "*** YOUR CODE HERE ***"
+    ans = []
+    ans += s
+    ans += t
+    ans.sort()
+    return ans
 
 
 def size_of_tree(t):
@@ -58,7 +70,8 @@ def size_of_tree(t):
     >>> size_of_tree(numbers)
     7
     """
-    "*** YOUR CODE HERE ***"
+    ans = sum([size_of_tree(it) for it in branches(t)]) + 1
+    return ans
 
 
 def replace_loki_at_leaf(t, lokis_replacement):
@@ -102,7 +115,10 @@ def divide(quotients, divisors):
     >>> divide(range(1, 5), range(20, 25))
     {1: [20, 21, 22, 23, 24], 2: [20, 22, 24], 3: [21, 24], 4: [20, 24]}
     """
-    return {____: ____ for ____ in ____}
+    return {
+        div: [num for num in divisors if num % div == 0]
+        for div in quotients
+    }
 
 
 

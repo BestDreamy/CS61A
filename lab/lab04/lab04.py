@@ -103,7 +103,10 @@ def replace_loki_at_leaf(t, lokis_replacement):
     >>> laerad == yggdrasil    # Make sure original tree is unmodified
     True
     """
-    "*** YOUR CODE HERE ***"
+    if is_leaf(t) and label(t) == 'loki':
+        return tree(lokis_replacement)
+    else:
+        return tree(label(t), [replace_loki_at_leaf(it, lokis_replacement) for it in branches(t)])
 
 
 def divide(quotients, divisors):

@@ -13,7 +13,13 @@ def pascal(row, column):
     >>> pascal(4, 2)     # Row 4 (1 4 6 4 1), Column 2
     6
     """
-    "*** YOUR CODE HERE ***"
+    if column > row:
+        return 0
+
+    if column == 0:
+        return 1
+
+    return pascal(row - 1, column) + pascal(row - 1, column - 1) 
 
 
 def insert_items(s, before, after):
@@ -41,8 +47,10 @@ def insert_items(s, before, after):
     >>> large_s3 is large_s
     True
     """
-    "*** YOUR CODE HERE ***"
-
+    for i in range(len(s) - 1, -1, -1):
+        if s[i] == before:
+            s.insert(i + 1, after)
+    return s
 
 HW_SOURCE_FILE=__file__
 

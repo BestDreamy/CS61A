@@ -26,12 +26,12 @@ def group_by(s, fn):
     {9: [-3, 3], 4: [-2, 2], 1: [-1, 1], 0: [0]}
     """
     grouped = {}
-    for ____ in ____:
-        key = ____
+    for it in s:
+        key = fn(it)
         if key in grouped:
-            ____
+            grouped[key] = grouped[key] + [it]
         else:
-            grouped[key] = ____
+            grouped[key] = [it]
     return grouped
 
 
@@ -47,7 +47,9 @@ def distance(city_a, city_b):
     >>> distance(city_c, city_d)
     5.0
     """
-    "*** YOUR CODE HERE ***"
+    x1, x2 = get_lat(city_a), get_lat(city_b)
+    y1, y2 = get_lon(city_a), get_lon(city_b)
+    return sqrt((x2 - x1) **2 + (y2 - y1) ** 2)
 
 def closer_city(lat, lon, city_a, city_b):
     """
@@ -64,7 +66,14 @@ def closer_city(lat, lon, city_a, city_b):
     >>> closer_city(41.29, 174.78, bucharest, vienna)
     'Bucharest'
     """
-    "*** YOUR CODE HERE ***"
+    x, nx = get_lat(city_a), get_lat(city_b)
+    y, ny = get_lon(city_a), get_lon(city_b)
+    city_c = make_city('Shanghai', lat, lon)
+    dis_a, dis_b = distance(city_c, city_a), distance(city_c, city_b)
+    if dis_b <= dis_a:
+        return get_name(city_b)
+    else:
+        return get_name(city_a)
 
 def check_city_abstraction():
     """

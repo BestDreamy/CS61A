@@ -225,7 +225,7 @@ class Server:
         dictionary from client names to client instances).
             client is an instance of the Client class.
         """
-        ____[____] = ____
+        [____] = ____
 
 class Client:
     """A client has a server, a name (str), and an inbox (list).

@@ -218,14 +218,14 @@ class Server:
         """Append the email to the inbox of the client it is addressed to.
             email is an instance of the Email class.
         """
-        ____.inbox.append(email)
+        self.clients[email.recipient_name].inbox.append(email)
 
     def register_client(self, client):
         """Add a client to the clients mapping (which is a 
         dictionary from client names to client instances).
             client is an instance of the Client class.
         """
-        [____] = ____
+        self.clients[client.name] = client
 
 class Client:
     """A client has a server, a name (str), and an inbox (list).
@@ -248,11 +248,11 @@ class Client:
         self.inbox = []
         self.server = server
         self.name = name
-        server.register_client(____)
+        server.register_client(self)
 
     def compose(self, message, recipient_name):
         """Send an email with the given message to the recipient."""
-        email = Email(message, ____, ____)
+        email = Email(message, self, recipient_name)
         self.server.send(email)
 
 
@@ -289,13 +289,21 @@ def make_change(amount, coins):
     rest = remove_one(coins, smallest)
     if amount < smallest:
         return None
-    "*** YOUR CODE HERE ***"
+    elif amount == smallest:
+        return [smallest]
+    else:
+        ans = make_change(amount - smallest, rest)
+        if ans is None:
+            return make_change(amount, rest)
+        else:
+            return [smallest] + ans
+
 
 def remove_one(coins, coin):
     """Remove one coin from a dictionary of coins. Return a new dictionary,
     leaving the original dictionary coins unchanged.
 
-    >>> coins = {2: 5, 3: 2, 6: 1}
+    >>> coisn = {2: 5, 3: 2, 6: 1}
     >>> remove_one(coins, 2) == {2: 4, 3: 2, 6: 1}
     True
     >>> remove_one(coins, 6) == {2: 5, 3: 2}
@@ -384,5 +392,44 @@ class ChangeMachine:
 
     def change(self, coin):
         """Return change for coin, removing the result from self.coins."""
-        "*** YOUR CODE HERE ***"
+        def pop_min(coins, minn):
+            rest = dict(coins)
+            if rest[minn] > 1:
+                rest[minn] -= 1
+            else:
+                rest.pop(minn)
+            return rest
+
+        def dfs(coins, coin):
+            if not coins:
+                return None
+            smallest_coin = min(coins)
+            rest = pop_min(coins, smallest_coin)
+
+            if smallest_coin > coin:
+                return None
+            elif smallest_coin == coin:
+                return [smallest_coin]
+            else:
+                ans = dfs(rest, coin - smallest_coin)
+                if ans is not None:
+                    return [smallest_coin] + ans
+                else:
+                    return dfs(rest, coin)
+
+        coins = dict(self.coins)
+        ans = dfs(coins, coin)
+        if ans is None:
+            return [coin]
+        else:
+            for i in ans:
+                self.coins = pop_min(self.coins, i)
+
+            if coin not in self.coins:
+                self.coins[coin] = 1
+            else:
+                self.coins[coin] += 1
+
+            return ans
+
 
